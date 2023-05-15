@@ -13,36 +13,36 @@ import LpHeader from "../src/components/landingpage/header/Header";
 import Testimonial from "../src/components/landingpage/testimonial/Testimonial";
 import { GetServerSideProps } from 'next';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    redirect: {
-      destination: '/auth/auth1/login',
-      permanent: false,
-    },
-  }
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   return {
+//     redirect: {
+//       destination: '/auth/auth1/login',
+//       permanent: false,
+//     },
+//   }
+// }
 
-const Index: React.FC = () => {
-  return null;
-}
-export default Index;
+// const Index: React.FC = () => {
+//   return null;
+// }
+// export default Index;
 
-// const Landingpage = () => {
+const Landingpage = () => {
 
-//   return (
-//     <PageContainer>
-//       <LpHeader />
-//       {/* <Banner /> */}
-//       {/* <DemoSlider /> */}
-//       {/* <Frameworks /> */}
-//       {/* <Testimonial /> */}
-//       {/* <Features /> */}
-//       {/* <C2a />
-//       <C2a2 /> */}
-//       <Footer />
-//     </PageContainer>
-//   );
-// };
+  return (
+    <PageContainer>
+      <LpHeader />
+      {/* <Banner /> */}
+      {/* <DemoSlider /> */}
+      {/* <Frameworks /> */}
+      {/* <Testimonial /> */}
+      {/* <Features /> */}
+      {/* <C2a />
+      <C2a2 /> */}
+      <Footer />
+    </PageContainer>
+  );
+};
 
-// Landingpage.layout = "Blank";
-// export default Landingpage;
+Landingpage.layout = "Blank";
+export default Landingpage;

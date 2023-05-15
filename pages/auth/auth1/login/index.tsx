@@ -74,7 +74,7 @@ const Login = () => (
             subtitle={
               <Stack direction="row" spacing={1} mt={3}>
                 <Typography color="textSecondary" variant="h6" fontWeight="500">
-                  관리자 시스템은 처음이신가?
+                  관리자 시스템은 처음이신가요?
                 </Typography>
                 <Typography
                   component={Link}
