@@ -69,7 +69,7 @@ const Menuitems: MenuitemsType[] = [
   
   {
     navlabel: true,
-    subheader: 'Apps',
+    subheader: 'Service',
   },
   {
     id: uniqueId(),

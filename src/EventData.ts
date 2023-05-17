@@ -4,6 +4,7 @@ const m = today.getMonth();
 const d = today.getDate();
 
 export interface EventType {
+  id? : string;
   title?: string;
   allDay?: boolean;
   start?: Date;

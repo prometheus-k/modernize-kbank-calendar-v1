@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   CardContent,
   Button,
@@ -27,6 +28,7 @@ moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
 
 type EvType = {
+  id: Number;
   title: string;
   allDay?: boolean;
   start?: Date;
@@ -35,7 +37,22 @@ type EvType = {
 };
 
 const BigCalendar = () => {
-  const [calevents, setCalEvents] = React.useState<any>(Events);
+  //const [calevents, setCalEvents] = React.useState<any>(Events);
+  const [calevents, setCalEvents] = useState<any>();
+  
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/events');
+        setCalEvents(response.data);
+      } catch (error) {
+        console.error('Failed to fetch events:', error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   const [open, setOpen] = React.useState<boolean>(false);
   const [title, setTitle] = React.useState<string>('');
   const [slot, setSlot] = React.useState<EvType>();
@@ -43,6 +60,7 @@ const BigCalendar = () => {
   const [end, setEnd] = React.useState<any | null>();
   const [color, setColor] = React.useState<string>('default');
   const [update, setUpdate] = React.useState<EvType | undefined | any>();
+  const [allDay, setAllDay] = React.useState<boolean>(false);
 
   const ColorVariation = [
     {
@@ -80,32 +98,62 @@ const BigCalendar = () => {
     setEnd(slotInfo.end);
   };
   //등록후 변경을 위한 팝업
-  const editEvent = (event: any) => {
-    console.log("editEvent");    
+  const editEvent = async (event: any) => {
+    console.log("editEvent");
+    try {
+      const response = await axios.get(`http://localhost:8080/events/${event.id}`);
+      const newEditEvent = response.data;
+      //const newEditEvent = calevents.find((elem: EvType) => elem.title === event.title);    
+      setColor(event.color);
+      setTitle(newEditEvent.title);
+      setColor(newEditEvent.color);
+      setStart(newEditEvent.start);
+      setEnd(newEditEvent.end);
+      setUpdate(event);
+    } catch (error) {
+      console.error('Failed to fetch the event:', error);
+    }
     setOpen(true);
-    const newEditEvent = calevents.find((elem: EvType) => elem.title === event.title);
-    setColor(event.color);
-    setTitle(newEditEvent.title);
-    setColor(newEditEvent.color);
-    setStart(newEditEvent.start);
-    setEnd(newEditEvent.end);
-    setUpdate(event);
   };
   
   //업데이트 및 삭제는 추가 업데이트 재호출
-  const updateEvent = (e: any) => {    
+  const updateEvent = async (e: any) => {    
     console.log("updateEvent");
     e.preventDefault();
-    setCalEvents(
-      calevents.map((elem: EvType) => {        
-        if (elem.title === update.title) {
-          console.log(start);
-          console.log(end);
-          return { ...elem, title, start, end, color };
-        }        
-        return elem;
-      }),
-    );
+
+    try {
+      const updatedEvent = {
+        title,
+        start,
+        end,
+        allDay,
+        color,
+      };
+  
+      await axios.put(`http://localhost:8080/events/${update.id}`, updatedEvent);
+  
+      setCalEvents(
+        calevents.map((elem: EvType) => {
+          if (elem.title === update.title) {
+            return { ...elem, title, start, end, color };
+          }
+          return elem;
+        }),
+      );
+    } catch (error) {
+      console.error('Failed to update the event:', error);
+    }
+    
+    // setCalEvents(
+    //   calevents.map((elem: EvType) => {        
+    //     if (elem.title === update.title) {
+    //       console.log(start);
+    //       console.log(end);
+    //       return { ...elem, title, start, end, color };
+    //     }        
+    //     return elem;
+    //   }),
+    // );
     setOpen(false);
     setTitle('');
     setColor('');
@@ -117,22 +165,44 @@ const BigCalendar = () => {
   const selectinputChangeHandler = (id: string) => setColor(id);
   
   //이벤트 등록
-  const submitHandler = (e: React.ChangeEvent<any>) => {        
+  const submitHandler = async (e: React.ChangeEvent<any>) => {        
     console.log("addNew");
     e.preventDefault();
-    const newEvents = calevents;
-    newEvents.push({
-      title,
-      start,
-      end,
-      color,
-    });
+    try {
+      const newEvent = {
+        title,
+        start,
+        end,
+        allDay,
+        color,
+      };
+  
+      const response = await axios.post('http://localhost:8080/events', newEvent);
+      const createdEvent = response.data;
+      console.info(createdEvent);
+      setCalEvents([...calevents, createdEvent]);
+    } catch (error) {
+      console.error('Failed to create the event:', error);
+    }
     setOpen(false);
     e.target.reset();
-    setCalEvents(newEvents);
     setTitle('');
     setStart(new Date());
     setEnd(new Date());
+
+    // const newEvents = calevents;
+    // newEvents.push({
+    //   title,
+    //   start,
+    //   end,
+    //   color,
+    // });
+    // setOpen(false);
+    // e.target.reset();
+    // setCalEvents(newEvents);
+    // setTitle('');
+    // setStart(new Date());
+    // setEnd(new Date());
   };
 
   const deleteHandler = (event: EvType) => {
@@ -167,7 +237,7 @@ const BigCalendar = () => {
 
   return (
     <PageContainer>
-      <Breadcrumb title="학습신청" subtitle="스케줄" />
+      <Breadcrumb title="예약관리" subtitle="학습신청" />
       <BlankCard>
         {/* ------------------------------------------- */}
         {/* Calendar */}
