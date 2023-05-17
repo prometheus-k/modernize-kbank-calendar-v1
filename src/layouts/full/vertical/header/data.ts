@@ -89,54 +89,54 @@ interface appsLinkType {
 }
 
 const appsLink: appsLinkType[] = [
-  {
-    href: "/apps/chats",
-    title: "Chat Application",
-    subtext: "New messages arrived",
-    avatar: "/images/svgs/icon-dd-chat.svg",
-  },
-  {
-    href: "/apps/ecommerce/shop",
-    title: "eCommerce App",
-    subtext: "New stock available",
-    avatar: "/images/svgs/icon-dd-cart.svg",
-  },
-  {
-    href: "/apps/notes",
-    title: "Notes App",
-    subtext: "To-do and Daily tasks",
-    avatar: "/images/svgs/icon-dd-invoice.svg",
-  },
+  // {
+  //   href: "/apps/chats",
+  //   title: "Chat Application",
+  //   subtext: "New messages arrived",
+  //   avatar: "/images/svgs/icon-dd-chat.svg",
+  // },
+  // {
+  //   href: "/apps/ecommerce/shop",
+  //   title: "eCommerce App",
+  //   subtext: "New stock available",
+  //   avatar: "/images/svgs/icon-dd-cart.svg",
+  // },
+  // {
+  //   href: "/apps/notes",
+  //   title: "Notes App",
+  //   subtext: "To-do and Daily tasks",
+  //   avatar: "/images/svgs/icon-dd-invoice.svg",
+  // },
   {
     href: "/apps/calendar",
     title: "Calendar App",
     subtext: "Get dates",
     avatar: "/images/svgs/icon-dd-date.svg",
   },
-  {
-    href: "/apps/contacts",
-    title: "Contact Application",
-    subtext: "2 Unsaved Contacts",
-    avatar: "/images/svgs/icon-dd-mobile.svg",
-  },
-  {
-    href: "/apps/tickets",
-    title: "Tickets App",
-    subtext: "Submit tickets",
-    avatar: "/images/svgs/icon-dd-lifebuoy.svg",
-  },
-  {
-    href: "/apps/email",
-    title: "Email App",
-    subtext: "Get new emails",
-    avatar: "/images/svgs/icon-dd-message-box.svg",
-  },
-  {
-    href: "/apps/blog/post",
-    title: "Blog App",
-    subtext: "added new blog",
-    avatar: "/images/svgs/icon-dd-application.svg",
-  },
+  // {
+  //   href: "/apps/contacts",
+  //   title: "Contact Application",
+  //   subtext: "2 Unsaved Contacts",
+  //   avatar: "/images/svgs/icon-dd-mobile.svg",
+  // },
+  // {
+  //   href: "/apps/tickets",
+  //   title: "Tickets App",
+  //   subtext: "Submit tickets",
+  //   avatar: "/images/svgs/icon-dd-lifebuoy.svg",
+  // },
+  // {
+  //   href: "/apps/email",
+  //   title: "Email App",
+  //   subtext: "Get new emails",
+  //   avatar: "/images/svgs/icon-dd-message-box.svg",
+  // },
+  // {
+  //   href: "/apps/blog/post",
+  //   title: "Blog App",
+  //   subtext: "added new blog",
+  //   avatar: "/images/svgs/icon-dd-application.svg",
+  // },
 ];
 
 interface LinkType {

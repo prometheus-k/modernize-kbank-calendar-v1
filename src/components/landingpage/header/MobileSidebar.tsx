@@ -18,7 +18,7 @@ const MobileSidebar = () => {
             <Box p={3}>
 
                 <Stack direction="column" spacing={2} >
-                    <Button color="inherit"
+                    {/* <Button color="inherit"
                         onClick={() => setToggle(!toggle)}
                         endIcon={<IconChevronDown width={20} />}
                         sx={{
@@ -35,7 +35,7 @@ const MobileSidebar = () => {
                                 </Box>
                             </Box>
                         </Collapse>
-                    )}
+                    )} */}
 
                     <Button color="inherit"
                         onClick={() => setToggle2(!toggle2)}
@@ -51,13 +51,13 @@ const MobileSidebar = () => {
                             </Box>
                         </Collapse>
                     )}
-                    <Button color="inherit" href="#" sx={{
+                    {/* <Button color="inherit" href="#" sx={{
                         justifyContent: 'start'
                     }}>Documentation</Button>
                     <Button color="inherit" href="https://adminmart.com/support" sx={{
                         justifyContent: 'start'
                     }}>Support</Button>
-                    <Button color="primary" variant="contained" href="#">Buy Now</Button>
+                    <Button color="primary" variant="contained" href="#">Buy Now</Button> */}
                 </Stack>
             </Box>
         </>

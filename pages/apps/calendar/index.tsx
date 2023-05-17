@@ -16,6 +16,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import moment from 'moment';
+import "moment/locale/ko";
 import Events from '../../../src/EventData';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
@@ -59,8 +60,7 @@ const BigCalendar = () => {
   const [start, setStart] = React.useState<any | null>();
   const [end, setEnd] = React.useState<any | null>();
   const [color, setColor] = React.useState<string>('default');
-  const [update, setUpdate] = React.useState<EvType | undefined | any>();
-  const [allDay, setAllDay] = React.useState<boolean>(false);
+  const [update, setUpdate] = React.useState<EvType | undefined | any>();  
 
   const ColorVariation = [
     {
@@ -292,12 +292,14 @@ const BigCalendar = () => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 label="Start Date"
+                inputFormat={"yyyy/MM/dd:hh:mm:ss a"}
                 value={start}
                 onChange={handleStartChange}
                 renderInput={(params: any) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
               />
               <DateTimePicker
                 label="End Date"                
+                inputFormat={"yyyy/MM/dd:hh:mm:ss a"}
                 value={end}
                 onChange={handleEndChange}
                 renderInput={(params: any) => (
