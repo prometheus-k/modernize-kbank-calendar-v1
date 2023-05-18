@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer,Views } from 'react-big-calendar';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -25,12 +25,12 @@ import Breadcrumb from '../../../src/layouts/full/shared/breadcrumb/Breadcrumb';
 import { IconCheck } from '@tabler/icons-react';
 import BlankCard from '../../../src/components/shared/BlankCard';
 
-moment.locale('en-GB');
+moment.locale('ko');
 const localizer = momentLocalizer(moment);
 
 type EvType = {
   id: Number;
-  title: string;
+  title: string;  
   allDay?: boolean;
   start?: Date;
   end?: Date;
@@ -38,14 +38,19 @@ type EvType = {
 };
 
 const BigCalendar = () => {
-  //const [calevents, setCalEvents] = React.useState<any>(Events);
-  const [calevents, setCalEvents] = useState<any>();
+  const [calevents, setCalEvents] = React.useState<any>(Events);
+  //const [calevents, setCalEvents] = useState<any>();
   
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get('http://localhost:8080/events');
-        setCalEvents(response.data);
+        const newEvents = response.data.map((event: any) => ({
+          ...event,
+          start: new Date(event.start),
+          end: new Date(event.end),
+        }));
+        setCalEvents(newEvents);
       } catch (error) {
         console.error('Failed to fetch events:', error);
       }
@@ -56,6 +61,7 @@ const BigCalendar = () => {
 
   const [open, setOpen] = React.useState<boolean>(false);
   const [title, setTitle] = React.useState<string>('');
+  const [allDay, setAllDay] = React.useState<boolean>(false);
   const [slot, setSlot] = React.useState<EvType>();
   const [start, setStart] = React.useState<any | null>();
   const [end, setEnd] = React.useState<any | null>();
@@ -89,6 +95,7 @@ const BigCalendar = () => {
       value: 'warning',
     },
   ];
+
   //최초 등록을 위한 팝업
   const addNewEventAlert = (slotInfo: EvType) => {
     console.log("addNewEventAlert");
@@ -97,6 +104,8 @@ const BigCalendar = () => {
     setStart(slotInfo.start);
     setEnd(slotInfo.end);
   };
+
+  
   //등록후 변경을 위한 팝업
   const editEvent = async (event: any) => {
     console.log("editEvent");
@@ -124,9 +133,8 @@ const BigCalendar = () => {
     try {
       const updatedEvent = {
         title,
-        start,
-        end,
-        allDay,
+        start: new Date(start), // convert to Date object
+        end: new Date(end), // convert to Date object
         color,
       };
   
@@ -156,6 +164,7 @@ const BigCalendar = () => {
     // );
     setOpen(false);
     setTitle('');
+    setAllDay(false);
     setColor('');
     setStart('');
     setEnd('');
@@ -171,9 +180,8 @@ const BigCalendar = () => {
     try {
       const newEvent = {
         title,
-        start,
-        end,
-        allDay,
+        start: new Date(start), // convert to Date object
+        end: new Date(end), // convert to Date object
         color,
       };
   
@@ -187,6 +195,7 @@ const BigCalendar = () => {
     setOpen(false);
     e.target.reset();
     setTitle('');
+    setAllDay(false);
     setStart(new Date());
     setEnd(new Date());
 
@@ -215,12 +224,15 @@ const BigCalendar = () => {
     // eslint-disable-line newline-before-return
     setOpen(false);
     setTitle('');
+    setAllDay(false);
     setStart(new Date());
     setEnd(new Date());
     setUpdate(null);
   };
 
   const eventColors = (event: EvType) => {
+    console.log("eventPropGetter");
+    console.log(event);
     if (event.color) {
       return { className: `event-${event.color}` };
     }
@@ -235,6 +247,7 @@ const BigCalendar = () => {
     setEnd(newValue);
   };
 
+
   return (
     <PageContainer>
       <Breadcrumb title="예약관리" subtitle="학습신청" />
@@ -242,7 +255,7 @@ const BigCalendar = () => {
         {/* ------------------------------------------- */}
         {/* Calendar */}
         {/* ------------------------------------------- */}
-        <CardContent>
+        <CardContent>     
           <Calendar
             selectable
             events={calevents}
@@ -254,7 +267,7 @@ const BigCalendar = () => {
             onSelectEvent={(event) => editEvent(event)}
             onSelectSlot={(slotInfo: any) => addNewEventAlert(slotInfo)}
             eventPropGetter={(event: any) => eventColors(event)}
-          />
+          />          
         </CardContent>
       </BlankCard>
       {/* ------------------------------------------- */}

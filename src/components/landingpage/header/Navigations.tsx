@@ -39,7 +39,7 @@ const Navigations = () => {
 
     return (
         <>
-            <StyledButton
+            {/* <StyledButton
                 color="inherit"
                 variant="text"
                 aria-expanded={open ? 'true' : undefined}
@@ -66,7 +66,7 @@ const Navigations = () => {
                 >
                     <DemosDD />
                 </Paper>
-            )}
+            )} */}
             <Box>
                 <StyledButton
                     color="inherit"
@@ -108,7 +108,7 @@ const Navigations = () => {
                     </Paper>
                 )}
             </Box>
-            <StyledButton color="inherit" variant="text" href="https://demos.adminmart.com/premium/nextjs/modernize-nextjs-pro/docs/index.html">
+            {/* <StyledButton color="inherit" variant="text" href="https://demos.adminmart.com/premium/nextjs/modernize-nextjs-pro/docs/index.html">
                 Documentation
             </StyledButton>
             <StyledButton color="inherit" variant="text" href="https://adminmart.com/support">
@@ -116,7 +116,7 @@ const Navigations = () => {
             </StyledButton>
             <Button color="primary" target="_blank" variant="contained" href="#">
                 Buy Now
-            </Button>
+            </Button> */}
         </>
     );
 };
