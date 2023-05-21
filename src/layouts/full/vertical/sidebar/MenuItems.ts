@@ -69,35 +69,35 @@ const Menuitems: MenuitemsType[] = [
   
   {
     navlabel: true,
+    subheader: 'Apps',
+  },
+  {
+    id: uniqueId(),
+    title: 'Calendar',
+    icon: IconCalendar,
+    href: '/apps/calendar',
+  },
+  // {
+  //   id: uniqueId(),
+  //   title: 'FAQ',
+  //   icon: IconHelp,
+  //   href: '/theme-pages/faq',
+  // },
+  {
+    navlabel: true,
     subheader: 'Service',
   },
   {
     id: uniqueId(),
-    title: '학습신청',
-    icon: IconCalendar,
-    href: '/apps/calendar',
-  },
-  {
-    id: uniqueId(),
-    title: 'FAQ',
-    icon: IconHelp,
-    href: '/theme-pages/faq',
-  },
-  {
-    navlabel: true,
-    subheader: 'AM TF',
-  },
-  {
-    id: uniqueId(),
-    title: "Test",
+    title: "AM Poc",
     icon: IconApps,
-    href: '/noticeboards/msa',
+    href: '/modernize/test',
     children: [
       {
       id: uniqueId(),
       title: '즉시이체',
       icon: IconPoint,
-      href: '/noticeboards/msa'
+      href: '/modernize/test/am'
       },      
     ]
   },

@@ -6,6 +6,7 @@ const d = today.getDate();
 export interface EventType {
   id? : string;
   title?: string;
+  participant?: string;
   allDay?: boolean;
   start?: Date;
   end?: Date;
@@ -15,6 +16,7 @@ export interface EventType {
 const Events: EventType[] = [
   {
     title: 'Twice event For two Days',
+    participant: 'Twice event For two Days',
     allDay: true,
     start: new Date(y, m, 3),
     end: new Date(y, m, 5),
@@ -22,6 +24,7 @@ const Events: EventType[] = [
   },
   {
     title: 'Learn ReactJs',
+    participant: 'Learn ReactJs',
     start: new Date(y, m, d + 3, 10, 30),
     end: new Date(y, m, d + 3, 11, 30),
     allDay: false,
@@ -29,6 +32,7 @@ const Events: EventType[] = [
   },
   {
     title: 'Launching MaterialArt Angular',
+    participant: 'Launching MaterialArt Angular',
     start: new Date(y, m, d + 7, 12, 0),
     end: new Date(y, m, d + 7, 14, 0),
     allDay: false,
@@ -36,6 +40,7 @@ const Events: EventType[] = [
   },
   {
     title: 'Lunch with Mr.Raw',
+    participant: 'Lunch with Mr.Raw',
     start: new Date(y, m, d - 2),
     end: new Date(y, m, d - 2),
     allDay: true,
@@ -43,6 +48,7 @@ const Events: EventType[] = [
   },
   {
     title: 'Going For Party of Sahs',
+    participant: 'Going For Party of Sahs',
     start: new Date(y, m, d + 1, 19, 0),
     end: new Date(y, m, d + 1, 22, 30),
     allDay: false,
@@ -50,12 +56,14 @@ const Events: EventType[] = [
   },
   {
     title: 'Learn Ionic',
+    participant: 'Learn Ionic',
     start: new Date(y, m, 23),
     end: new Date(y, m, 25),
     color: 'warning',
   },
   {
     title: 'Research of making own Browser',
+    participant: 'Research of making own Browser',
     start: new Date(y, m, 19),
     end: new Date(y, m, 22),
     color: 'default',

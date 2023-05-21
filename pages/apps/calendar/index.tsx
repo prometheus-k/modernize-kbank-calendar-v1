@@ -16,7 +16,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import moment from 'moment';
-import "moment/locale/ko";
+// import "moment/locale/ko";
 import Events from '../../../src/EventData';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
@@ -25,12 +25,13 @@ import Breadcrumb from '../../../src/layouts/full/shared/breadcrumb/Breadcrumb';
 import { IconCheck } from '@tabler/icons-react';
 import BlankCard from '../../../src/components/shared/BlankCard';
 
-moment.locale('ko');
+moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
 
 type EvType = {
   id: Number;
   title: string;  
+  participant: string;  
   allDay?: boolean;
   start?: Date;
   end?: Date;
@@ -38,7 +39,7 @@ type EvType = {
 };
 
 const BigCalendar = () => {
-  const [calevents, setCalEvents] = React.useState<any>(Events);
+  const [calevents, setCalEvents] = React.useState<any>();
   //const [calevents, setCalEvents] = useState<any>();
   
   useEffect(() => {
@@ -61,6 +62,7 @@ const BigCalendar = () => {
 
   const [open, setOpen] = React.useState<boolean>(false);
   const [title, setTitle] = React.useState<string>('');
+  const [participant, setParticipant] = React.useState<string>('');
   const [allDay, setAllDay] = React.useState<boolean>(false);
   const [slot, setSlot] = React.useState<EvType>();
   const [start, setStart] = React.useState<any | null>();
@@ -115,6 +117,7 @@ const BigCalendar = () => {
       //const newEditEvent = calevents.find((elem: EvType) => elem.title === event.title);    
       setColor(event.color);
       setTitle(newEditEvent.title);
+      setParticipant(newEditEvent.participant);      
       setColor(newEditEvent.color);
       setStart(newEditEvent.start);
       setEnd(newEditEvent.end);
@@ -133,6 +136,7 @@ const BigCalendar = () => {
     try {
       const updatedEvent = {
         title,
+        participant,
         start: new Date(start), // convert to Date object
         end: new Date(end), // convert to Date object
         color,
@@ -143,7 +147,7 @@ const BigCalendar = () => {
       setCalEvents(
         calevents.map((elem: EvType) => {
           if (elem.title === update.title) {
-            return { ...elem, title, start, end, color };
+            return { ...elem, title, participant, start, end, color };
           }
           return elem;
         }),
@@ -164,13 +168,16 @@ const BigCalendar = () => {
     // );
     setOpen(false);
     setTitle('');
+    setParticipant('');
     setAllDay(false);
     setColor('');
     setStart('');
     setEnd('');
     setUpdate(null);
   };
-  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  
+  const inputChangeTitleHandler = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const inputChangeParticipantHandler = (e: React.ChangeEvent<HTMLInputElement>) => setParticipant(e.target.value);
   const selectinputChangeHandler = (id: string) => setColor(id);
   
   //이벤트 등록
@@ -180,6 +187,7 @@ const BigCalendar = () => {
     try {
       const newEvent = {
         title,
+        participant,
         start: new Date(start), // convert to Date object
         end: new Date(end), // convert to Date object
         color,
@@ -195,6 +203,7 @@ const BigCalendar = () => {
     setOpen(false);
     e.target.reset();
     setTitle('');
+    setParticipant('');
     setAllDay(false);
     setStart(new Date());
     setEnd(new Date());
@@ -214,16 +223,25 @@ const BigCalendar = () => {
     // setEnd(new Date());
   };
 
-  const deleteHandler = (event: EvType) => {
-    console.log("deleteHandler");
-    const updatecalEvents = calevents.filter((ind: EvType) => ind.title !== event.title);
-    setCalEvents(updatecalEvents);
+  const deleteHandler = async (event: EvType) => {
+       console.log("deleteHandler");
+    try {
+      // Remove the event from the local state if the server deletion was successful
+      const updatedCalEvents = calevents.filter((ind: EvType) => ind.id !== event.id);
+      setCalEvents(updatedCalEvents);
+      // Send a DELETE request to the server
+      await axios.delete(`http://localhost:8080/events/${event.id}`);
+
+    } catch (error) {
+      console.error('Failed to delete the event:', error);
+    }
   };
 
   const handleClose = () => {
     // eslint-disable-line newline-before-return
     setOpen(false);
     setTitle('');
+    setParticipant('');
     setAllDay(false);
     setStart(new Date());
     setEnd(new Date());
@@ -291,13 +309,23 @@ const BigCalendar = () => {
 
             <TextField
               id="Event Title"
-              placeholder="Enter Event Title"
+              placeholder="Enter Event Team"
               variant="outlined"
               fullWidth
-              label="Event Title"
+              label="Event Team"
               value={title}
               sx={{ mb: 3 }}
-              onChange={inputChangeHandler}
+              onChange={inputChangeTitleHandler}
+            />
+            <TextField
+              id="Event Participant"
+              placeholder="Enter Event Participant"
+              variant="outlined"
+              fullWidth
+              label="Event Participant"
+              value={participant}
+              sx={{ mb: 3 }}
+              onChange={inputChangeParticipantHandler}
             />
             {/* ------------------------------------------- */}
             {/* Selection of Start and end date */}

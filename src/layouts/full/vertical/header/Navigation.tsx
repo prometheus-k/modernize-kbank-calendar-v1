@@ -71,7 +71,7 @@ const AppDD = () => {
                   pt={2}
                   pr={4}
                 >
-                  <Link href="/faq">
+                  {/* <Link href="/faq">
                     <Typography
                       variant="subtitle2"
                       fontWeight="600"
@@ -86,28 +86,19 @@ const AppDD = () => {
                   </Link>
                   <Button variant="contained" color="primary">
                     Check
-                  </Button>
+                  </Button> */}
                 </Box>
               </Box>
               <Divider orientation="vertical" />
             </Grid>
-            <Grid item sm={4}>
+            {/* <Grid item sm={4}>
               <Box p={4}>
                 <QuickLinks />
               </Box>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Menu>
-      </Box>
-      <Button color="inherit" sx={{color: (theme) => theme.palette.text.secondary}} variant="text" href="/apps/chat" component={Link}>
-        Chat
-      </Button>
-      <Button color="inherit" sx={{color: (theme) => theme.palette.text.secondary}} variant="text" href="/apps/calendar" component={Link}>
-        Calendar
-      </Button>
-      <Button color="inherit" sx={{color: (theme) => theme.palette.text.secondary}} variant="text" href="/apps/email" component={Link}>
-        Email
-      </Button>
+      </Box>      
     </>
   );
 };
