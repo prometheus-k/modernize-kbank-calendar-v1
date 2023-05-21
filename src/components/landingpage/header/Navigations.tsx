@@ -77,7 +77,7 @@ const Navigations = () => {
                     }}
                     endIcon={<IconChevronDown size="15" style={{ marginLeft: '-5px', marginTop: '2px' }} />}
                 >
-                    Pages
+                    Service
                 </StyledButton>
                 {open2 && (
                     <Paper
@@ -85,7 +85,7 @@ const Navigations = () => {
                         onMouseLeave={handleClose2}
                         sx={{
                             position: 'absolute',
-                            left: '0',
+                            left: '500px',
                             right: '0',
                             top: '55px',
                             width: '850px',
@@ -99,11 +99,11 @@ const Navigations = () => {
                                 </Box>
                                 <Divider orientation="vertical" />
                             </Grid>
-                            <Grid item sm={4}>
+                            {/* <Grid item sm={4}>
                                 <Box p={4}>
                                     <QuickLinks />
                                 </Box>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Paper>
                 )}

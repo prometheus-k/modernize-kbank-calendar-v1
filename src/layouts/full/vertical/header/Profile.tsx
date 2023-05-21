@@ -13,17 +13,24 @@ import * as dropdownData from './data';
 
 import { IconMail } from '@tabler/icons-react';
 import { Stack } from '@mui/system';
-
+import { useAuth  } from "../../../../components/shared/AuthProvider"; // AuthProvider 가져오기
+import { useRouter } from 'next/router'; // next/router에서 useRouter 가져오기
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const { logout } = useAuth(); // AuthProvider의 logout 함수 가져오기
+  const router = useRouter(); // useRouter 사용
+
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
-
+  const handleLogout = () => {
+    logout(); // AuthProvider의 logout 함수 호출하여 로그아웃 처리
+    router.push('/');
+  };
   return (
     <Box>
       <IconButton
@@ -156,7 +163,14 @@ const Profile = () => {
               <img src={"/images/backgrounds/unlimited-bg.png"} alt="unlimited" className="signup-bg"></img>
             </Box>
           </Box>
-          <Button href="/auth/login" variant="outlined" color="primary" component={Link} fullWidth>
+          <Button 
+          variant="outlined" 
+          color="primary" 
+          // href="/auth2/login" 
+          // component={Link} 
+          fullWidth
+          onClick={handleLogout} // 로그아웃 버튼 클릭 시 handleLogout 함수 호출
+          >
             Logout
           </Button>
         </Box>

@@ -11,7 +11,7 @@ import Store from "../src/store/Store";
 import RTL from "./../src/layouts/full/shared/customizer/RTL";
 import { useSelector } from "../src/store/Store";
 import { AppState } from "../src/store/Store";
-
+import { AuthProvider } from "../src/components/shared/AuthProvider"; // AuthProvider 가져오기
 import BlankLayout from "../src/layouts/blank/BlankLayout";
 import FullLayout from "../src/layouts/full/FullLayout";
 
@@ -68,6 +68,8 @@ const MyApp = (props: MyAppProps) => {
 
 export default (props: MyAppProps) => (
   <Provider store={Store}>
-    <MyApp {...props} />
+    <AuthProvider> {/* AuthProvider로 감싸기 */}
+      <MyApp {...props} />
+    </AuthProvider>
   </Provider>
 );

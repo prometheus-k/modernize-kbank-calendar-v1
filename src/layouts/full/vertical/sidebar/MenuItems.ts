@@ -95,7 +95,7 @@ const Menuitems: MenuitemsType[] = [
     children: [
       {
       id: uniqueId(),
-      title: 'Message Test',
+      title: '즉시이체',
       icon: IconPoint,
       href: '/noticeboards/msa'
       },      

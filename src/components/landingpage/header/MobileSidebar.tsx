@@ -42,12 +42,12 @@ const MobileSidebar = () => {
                         endIcon={<IconChevronDown width={20} />}
                         sx={{
                             justifyContent: 'space-between'
-                        }}>Pages</Button>
+                        }}>Service</Button>
                     {toggle2 && (
                         <Collapse in={toggle2}>
                             <Box overflow="hidden" ml={1}>
                                 <AppLinks />
-                                <QuickLinks />
+                                {/* <QuickLinks /> */}
                             </Box>
                         </Collapse>
                     )}
