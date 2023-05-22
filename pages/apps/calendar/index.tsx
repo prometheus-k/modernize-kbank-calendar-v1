@@ -11,21 +11,26 @@ import {
   Typography,
 } from '@mui/material';
 import { Calendar, momentLocalizer,Views } from 'react-big-calendar';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import ko from 'date-fns/locale/ko';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import moment from 'moment';
-// import "moment/locale/ko";
+import "moment/locale/ko";
 import Events from '../../../src/EventData';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
 import PageContainer from '../../../src/components/container/PageContainer';
 import Breadcrumb from '../../../src/layouts/full/shared/breadcrumb/Breadcrumb';
 import { IconCheck } from '@tabler/icons-react';
 import BlankCard from '../../../src/components/shared/BlankCard';
 
-moment.locale('en-GB');
+const DnDCalendar = withDragAndDrop(Calendar);
+moment.locale('ko-KR');
 const localizer = momentLocalizer(moment);
 
 type EvType = {
@@ -176,6 +181,16 @@ const BigCalendar = () => {
     setUpdate(null);
   };
   
+  const onEventDrop = ({ event, start, end, allDay }: any) => {
+    console.log(start, end);
+    // update event in your state or database...
+  };
+
+  const onEventResize = ({ event, start, end, allDay }: any) => {
+    console.log(start, end);
+    // update event in your state or database...
+  };
+
   const inputChangeTitleHandler = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   const inputChangeParticipantHandler = (e: React.ChangeEvent<HTMLInputElement>) => setParticipant(e.target.value);
   const selectinputChangeHandler = (id: string) => setColor(id);
@@ -274,17 +289,20 @@ const BigCalendar = () => {
         {/* Calendar */}
         {/* ------------------------------------------- */}
         <CardContent>     
-          <Calendar
-            selectable
+          <DnDCalendar
+            selectable={true}
             events={calevents}
-            defaultView="month"
+            defaultView={Views.MONTH}
             scrollToTime={new Date(1970, 1, 1, 6)}
             defaultDate={new Date()}
             localizer={localizer}
             style={{ height: 'calc(100vh - 350px' }}
+            resizable
+            onEventDrop={onEventDrop}
+            onEventResize={onEventResize}            
             onSelectEvent={(event) => editEvent(event)}
             onSelectSlot={(slotInfo: any) => addNewEventAlert(slotInfo)}
-            eventPropGetter={(event: any) => eventColors(event)}
+            eventPropGetter={(event: any) => eventColors(event)}            
           />          
         </CardContent>
       </BlankCard>
@@ -330,7 +348,7 @@ const BigCalendar = () => {
             {/* ------------------------------------------- */}
             {/* Selection of Start and end date */}
             {/* ------------------------------------------- */}
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ko}>
               <DateTimePicker
                 label="Start Date"
                 inputFormat={"yyyy/MM/dd:hh:mm:ss a"}
