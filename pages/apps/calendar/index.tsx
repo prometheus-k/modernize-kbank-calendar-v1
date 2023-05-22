@@ -161,16 +161,7 @@ const BigCalendar = () => {
       console.error('Failed to update the event:', error);
     }
     
-    // setCalEvents(
-    //   calevents.map((elem: EvType) => {        
-    //     if (elem.title === update.title) {
-    //       console.log(start);
-    //       console.log(end);
-    //       return { ...elem, title, start, end, color };
-    //     }        
-    //     return elem;
-    //   }),
-    // );
+
     setOpen(false);
     setTitle('');
     setParticipant('');
@@ -181,14 +172,54 @@ const BigCalendar = () => {
     setUpdate(null);
   };
   
-  const onEventDrop = ({ event, start, end, allDay }: any) => {
+  const onEventDrop = async ({ event, start, end, allDay }: any) => {
     console.log(start, end);
-    // update event in your state or database...
+      try {
+        const updatedEvent = {
+          ...event,
+          start,
+          end,
+          allDay
+        };
+
+        await axios.put(`http://localhost:8080/events/${updatedEvent.id}`, updatedEvent);
+
+      setCalEvents(
+        calevents.map((elem: EvType) => {
+          if (elem.title === update.title) {
+            return { ...elem, title, participant, start, end, color };
+          }
+          return elem;
+        }),
+      );
+    } catch (error) {
+      console.error('이벤트 업데이트에 실패했습니다:', error);
+    }
   };
 
-  const onEventResize = ({ event, start, end, allDay }: any) => {
+  const onEventResize = async ({ event, start, end, allDay }: any) => {
     console.log(start, end);
-    // update event in your state or database...
+    try {
+      const updatedEvent = {
+        ...event,
+        start,
+        end,
+        allDay
+      };
+
+      await axios.put(`http://localhost:8080/events/${update.id}`, updatedEvent);
+
+      setCalEvents(
+        calevents.map((elem: EvType) => {
+          if (elem.title === update.title) {
+            return { ...elem, title, participant, start, end, color };
+          }
+          return elem;
+        }),
+      );
+    } catch (error) {
+      console.error('이벤트 업데이트에 실패했습니다:', error);
+    }
   };
 
   const inputChangeTitleHandler = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
