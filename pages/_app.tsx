@@ -8,24 +8,15 @@ import { ThemeSettings } from "../src/theme/Theme";
 import createEmotionCache from "../src/createEmotionCache";
 import { Provider } from "react-redux";
 import Store from "../src/store/Store";
-import RTL from "./../src/layouts/full/shared/customizer/RTL";
-import { useSelector } from "../src/store/Store";
-import { AppState } from "../src/store/Store";
-import { AuthProvider } from "../src/components/shared/AuthProvider"; // AuthProvider 가져오기
+
 import BlankLayout from "../src/layouts/blank/BlankLayout";
 import FullLayout from "../src/layouts/full/FullLayout";
 
-import "../src/_mockApis";
-import "../src/utils/i18n";
 
 // CSS FILES
 import "react-quill/dist/quill.snow.css";
-import "./forms/form-quill/Quill.css";
 import "./apps/calendar/Calendar.css";
-import "../src/components/landingpage/testimonial/testimonial.css";
-import "../src/components/landingpage/demo-slider/demo-slider.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -45,7 +36,6 @@ const MyApp = (props: MyAppProps) => {
     pageProps,
   }: any = props;
   const theme = ThemeSettings();
-  const customizer = useSelector((state: AppState) => state.customizer);
   const Layout = layouts[Component.layout] || FullLayout;
 
   return (
@@ -55,21 +45,17 @@ const MyApp = (props: MyAppProps) => {
         <title>Modernize NextJs Admin template</title>
       </Head>
       <ThemeProvider theme={theme}>
-        <RTL direction={customizer.activeDir}>
           <CssBaseline />
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </RTL>
       </ThemeProvider>
     </CacheProvider>
   );
 };
 
 export default (props: MyAppProps) => (
-  <Provider store={Store}>
-    <AuthProvider> {/* AuthProvider로 감싸기 */}
-      <MyApp {...props} />
-    </AuthProvider>
+  <Provider store={Store}>    
+      <MyApp {...props} />    
   </Provider>
 );
